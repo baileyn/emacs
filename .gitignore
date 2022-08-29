@@ -1,0 +1,15 @@
+*.elc
+/eln-cache/
+/straight/
+/transient/
+/eshell/
+/crafted-emacs/
+/projects
+/elpa/
+/bookmarks
+/network-security.data
+/var/
+/server
+/projectile*
+/history
+/auto-save-list
