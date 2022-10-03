@@ -97,6 +97,7 @@
 #+end_src
 
 #### Evil Mode (vim)
+##### Core
 #+begin_src emacs-lisp
   (use-package evil
     :init
@@ -111,7 +112,12 @@
 
     (evil-set-initial-state 'messages-buffer-mode 'normal)
     (evil-set-initial-state 'dashboard-mode 'normal))
+#+end_src
 
+##### Undo Tree
+Undo Tree is used to allow redo functionality with Evil mode.
+
+#+begin_src emacs-lisp
   (use-package undo-tree
     :after evil
     :diminish
@@ -119,6 +125,17 @@
     (evil-set-undo-system 'undo-tree)
     (global-undo-tree-mode 1))
 #+end_src
+
+##### Evil Collection
+#+begin_src emacs-lisp
+  (use-package evil-collection
+    :after evil
+    :config
+    (evil-collection-init))
+#+end_src
+
+#+RESULTS:
+: t
 
 ### Completion
 #### Ivy
