@@ -86,15 +86,16 @@
 #+begin_src emacs-lisp
   (use-package general
     :config
-    (general-create-definer njb/leader-keys
-      :keymaps '(normal insert visual emacs)
-      :prefix "SPC"
-      :global-prefix "SPC"))
+    (general-create-definer nb/leader-keys
+      :keymaps '(normal visual emacs)
+      :prefix "SPC"))
 
-  ;; (general-define-key
-  ;;   "C-M-k" 'something
-  ;;   "C-M-j" 'counsel-switch-buffer)
+  (nb/leader-keys
+    "t" '(:ignore t :which-key "toggles")
+    "tt" '(counsel-load-theme :which-key "choose theme"))
 #+end_src
+
+#+RESULTS:
 
 #### Evil Mode (vim)
 ##### Core
@@ -133,9 +134,6 @@ Undo Tree is used to allow redo functionality with Evil mode.
     :config
     (evil-collection-init))
 #+end_src
-
-#+RESULTS:
-: t
 
 ### Completion
 #### Ivy
@@ -189,5 +187,20 @@ Undo Tree is used to allow redo functionality with Evil mode.
     :custom ((doom-modeline-height 15)))
 
   (load-theme 'doom-dark+ t)
+#+end_src
+
+### Utility
+#### Hydra
+#+begin_src emacs-lisp
+  (use-package hydra)
+
+  (defhydra hydra-text-scale (:timeout 4)
+    "scale text"
+    ("j" text-scale-increase "in")
+    ("k" text-scale-decrease "out")
+    ("f" nil "finished" :exit t))
+
+  (nb/leader-keys
+    "ts" '(hydra-text-scale/body :which-key "scale text"))
 #+end_src
 

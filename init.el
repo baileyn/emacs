@@ -52,14 +52,13 @@
 
 (use-package general
   :config
-  (general-create-definer njb/leader-keys
-    :keymaps '(normal insert visual emacs)
-    :prefix "SPC"
-    :global-prefix "SPC"))
+  (general-create-definer nb/leader-keys
+    :keymaps '(normal visual emacs)
+    :prefix "SPC"))
 
-;; (general-define-key
-;;   "C-M-k" 'something
-;;   "C-M-j" 'counsel-switch-buffer)
+(nb/leader-keys
+  "t" '(:ignore t :which-key "toggles")
+  "tt" '(counsel-load-theme :which-key "choose theme"))
 
 (use-package evil
   :init
@@ -126,3 +125,14 @@
   :custom ((doom-modeline-height 15)))
 
 (load-theme 'doom-dark+ t)
+
+(use-package hydra)
+
+(defhydra hydra-text-scale (:timeout 4)
+  "scale text"
+  ("j" text-scale-increase "in")
+  ("k" text-scale-decrease "out")
+  ("f" nil "finished" :exit t))
+
+(nb/leader-keys
+  "ts" '(hydra-text-scale/body :which-key "scale text"))
