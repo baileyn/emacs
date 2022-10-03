@@ -221,3 +221,12 @@ Undo Tree is used to allow redo functionality with Evil mode.
   (use-package counsel-projectile
     :config (counsel-projectile-mode 1))
 #+end_src
+
+### Source Control
+#### Magit
+#+begin_src emacs-lisp
+  (use-package magit
+    :commands (magit-status magit-get-current-branch))
+    ;:custom
+    ;(magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+#+end_src
