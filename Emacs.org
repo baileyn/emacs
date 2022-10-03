@@ -215,11 +215,13 @@ Undo Tree is used to allow redo functionality with Evil mode.
     :custom ((projectile-completion-system . 'ivy))
     :init
     (when (file-directory-p "~/../../projects")
-	(setq projectile-project-search-path '("~/.emacs.d" ("~/../../projects" . 2))))
+      (setq projectile-project-search-path '("~/.emacs.d" ("~/../../projects" . 2))))
     (setq projectile-switch-project-action #'projectile-dired))
 
-  (use-package counsel-projectile
-    :config (counsel-projectile-mode 1))
+  ; TODO: Take a look at this. The `counsel-projectile-mode` command fails for some reason...
+  ;(use-package counsel-projectile
+    ;:config
+    ;(counsel-projectile-mode))
 #+end_src
 
 ### Source Control
@@ -229,4 +231,10 @@ Undo Tree is used to allow redo functionality with Evil mode.
     :commands (magit-status magit-get-current-branch))
     ;:custom
     ;(magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+#+end_src
+
+#### Forge
+#+begin_src emacs-lisp
+  (use-package forge
+    :after magit)
 #+end_src

@@ -145,21 +145,18 @@
   :custom ((projectile-completion-system . 'ivy))
   :init
   (when (file-directory-p "~/../../projects")
-      (setq projectile-project-search-path '("~/.emacs.d" ("~/../../projects" . 2))))
+    (setq projectile-project-search-path '("~/.emacs.d" ("~/../../projects" . 2))))
   (setq projectile-switch-project-action #'projectile-dired))
 
-(use-package counsel-projectile
-  :config (counsel-projectile-mode 1))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(evil-magit magit counsel-projectile which-key use-package undo-tree rainbow-delimiters projectile ivy-rich hydra helpful general evil-collection doom-themes doom-modeline diminish counsel all-the-icons)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+; TODO: Take a look at this. The `counsel-projectile-mode` command fails for some reason...
+;(use-package counsel-projectile
+  ;:config
+  ;(counsel-projectile-mode))
+
+(use-package magit
+  :commands (magit-status magit-get-current-branch))
+  ;:custom
+  ;(magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+
+(use-package forge
+  :after magit)
