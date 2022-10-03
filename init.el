@@ -128,7 +128,7 @@
 
 (use-package hydra)
 
-(defhydra hydra-text-scale (:timeout 4)
+(defhydra hydra-text-scale (:timeout 1)
   "scale text"
   ("j" text-scale-increase "in")
   ("k" text-scale-decrease "out")
@@ -136,3 +136,17 @@
 
 (nb/leader-keys
   "ts" '(hydra-text-scale/body :which-key "scale text"))
+
+(use-package projectile
+  :diminish
+  :config (projectile-mode)
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
+  :custom ((projectile-completion-system . 'ivy))
+  :init
+  (when (file-directory-p "~/../../projects")
+      (setq projectile-project-search-path '("~/.emacs.d" ("~/../../projects" . 2))))
+  (setq projectile-switch-project-action #'projectile-dired))
+
+(use-package counsel-projectile
+  :config (counsel-projectile-mode 1))
