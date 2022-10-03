@@ -81,6 +81,45 @@
   (use-package diminish)
 #+end_src
 
+### Keybinding
+#### General
+#+begin_src emacs-lisp
+  (use-package general
+    :config
+    (general-create-definer njb/leader-keys
+      :keymaps '(normal insert visual emacs)
+      :prefix "SPC"
+      :global-prefix "SPC"))
+
+  ;; (general-define-key
+  ;;   "C-M-k" 'something
+  ;;   "C-M-j" 'counsel-switch-buffer)
+#+end_src
+
+#### Evil Mode (vim)
+#+begin_src emacs-lisp
+  (use-package evil
+    :init
+    (setq evil-want-integration t)
+    (setq evil-want-keybinding nil)
+    (setq evil-want-C-u-scroll t)
+    (setq evil-want-C-i-jump t)
+    :config
+    (evil-mode 1)
+    (evil-global-set-key 'motion "j" 'evil-next-visual-line)
+    (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+
+    (evil-set-initial-state 'messages-buffer-mode 'normal)
+    (evil-set-initial-state 'dashboard-mode 'normal))
+
+  (use-package undo-tree
+    :after evil
+    :diminish
+    :config
+    (evil-set-undo-system 'undo-tree)
+    (global-undo-tree-mode 1))
+#+end_src
+
 ### Completion
 #### Ivy
 #+begin_src emacs-lisp
