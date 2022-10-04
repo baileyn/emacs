@@ -208,6 +208,11 @@ Undo Tree is used to allow redo functionality with Evil mode.
     "ts" '(hydra-text-scale/body :which-key "scale text"))
 #+end_src
 
+#### Org
+#+begin_src emacs-lisp
+  (use-package org)
+#+end_src
+
 ### Projects
 #### Projectile
 #+begin_src emacs-lisp
