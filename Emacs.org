@@ -95,8 +95,6 @@
     "tt" '(counsel-load-theme :which-key "choose theme"))
 #+end_src
 
-#+RESULTS:
-
 #### Evil Mode (vim)
 ##### Core
 #+begin_src emacs-lisp
@@ -208,20 +206,21 @@ Undo Tree is used to allow redo functionality with Evil mode.
 #### Projectile
 #+begin_src emacs-lisp
   (use-package projectile
-    :diminish
+    :diminish projectile-mode
     :config (projectile-mode)
     :bind-keymap
     ("C-c p" . projectile-command-map)
-    :custom ((projectile-completion-system . 'ivy))
+    :custom ((projectile-completion-system 'ivy))
     :init
     (when (file-directory-p "~/../../projects")
       (setq projectile-project-search-path '("~/.emacs.d" ("~/../../projects" . 2))))
     (setq projectile-switch-project-action #'projectile-dired))
 
   ; TODO: Take a look at this. The `counsel-projectile-mode` command fails for some reason...
-  ;(use-package counsel-projectile
-    ;:config
-    ;(counsel-projectile-mode))
+  (use-package counsel-projectile
+    :after projectile
+    :config
+    (counsel-projectile-mode))
 #+end_src
 
 ### Source Control
@@ -238,3 +237,13 @@ Undo Tree is used to allow redo functionality with Evil mode.
   (use-package forge
     :after magit)
 #+end_src
+
+### Programming
+#### Languages
+##### Jenkins/Groovy
+#+begin_src emacs-lisp
+  (use-package groovy-mode)
+  (use-package jenkinsfile-mode
+    :mode "Jenkinsfile.*")
+#+end_src
+

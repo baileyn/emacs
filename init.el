@@ -138,20 +138,21 @@
   "ts" '(hydra-text-scale/body :which-key "scale text"))
 
 (use-package projectile
-  :diminish
+  :diminish projectile-mode
   :config (projectile-mode)
   :bind-keymap
   ("C-c p" . projectile-command-map)
-  :custom ((projectile-completion-system . 'ivy))
+  :custom ((projectile-completion-system 'ivy))
   :init
   (when (file-directory-p "~/../../projects")
     (setq projectile-project-search-path '("~/.emacs.d" ("~/../../projects" . 2))))
   (setq projectile-switch-project-action #'projectile-dired))
 
 ; TODO: Take a look at this. The `counsel-projectile-mode` command fails for some reason...
-;(use-package counsel-projectile
-  ;:config
-  ;(counsel-projectile-mode))
+(use-package counsel-projectile
+  :after projectile
+  :config
+  (counsel-projectile-mode))
 
 (use-package magit
   :commands (magit-status magit-get-current-branch))
@@ -160,3 +161,8 @@
 
 (use-package forge
   :after magit)
+
+(use-package groovy-mode)
+(use-package jenkinsfile-mode
+  :after groovy-mode
+  :mode "Jenkinsfile.*")
