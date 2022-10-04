@@ -238,12 +238,20 @@ Undo Tree is used to allow redo functionality with Evil mode.
     :after magit)
 #+end_src
 
+#### Git Gutter
+#+begin_src emacs-lisp
+  (use-package git-gutter+
+    :config
+    (global-git-gutter+-mode +1)
+    (setq git-gutter+-hide-gutter t))
+#+end_src
+
 ### Programming
 #### Languages
 ##### Jenkins/Groovy
 #+begin_src emacs-lisp
-  (use-package groovy-mode)
-  (use-package jenkinsfile-mode
+(use-package groovy-mode)
+(use-package jenkinsfile-mode
     :mode "Jenkinsfile.*")
 #+end_src
 

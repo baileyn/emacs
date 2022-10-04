@@ -162,7 +162,10 @@
 (use-package forge
   :after magit)
 
+(use-package git-gutter+
+  :config
+  (global-git-gutter+-mode +1))
+
 (use-package groovy-mode)
 (use-package jenkinsfile-mode
-  :after groovy-mode
-  :mode "Jenkinsfile.*")
+    :mode "Jenkinsfile.*")
