@@ -52,3 +52,4 @@ flycheck_*.el
 /projectile.cache
 /projectile-bookmarks.eld
 /*.sqlite
+/secrets.el

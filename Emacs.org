@@ -36,6 +36,12 @@
   (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 #+end_src
 
+## Additional Configurations
+#+begin_src emacs-lisp
+  (when (file-exists-p "~/.emacs.d/secrets.el")
+    (load-file (expand-file-name "~/.emacs.d/secrets.el")))
+#+end_src
+
 ## Plugins
 ### Core
 #### Use Package
