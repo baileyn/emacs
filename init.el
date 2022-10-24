@@ -20,6 +20,9 @@
 
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
+(when (file-exists-p "~/.emacs.d/secrets.el")
+  (load-file (expand-file-name "~/.emacs.d/secrets.el")))
+
 (require 'package)
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
 			 ("org" . "https://orgmode.org/elpa/")
@@ -40,8 +43,8 @@
 
 (use-package helpful
   :custom
-  (counsel-describe-function-function #'helpful-callable)
-  (counsel-describe-variable-function #'helpful-variable)
+  (counsel-describe-function-function *'helpful-callable)
+  (counsel-describe-variable-function *'helpful-variable)
   :bind
   ([remap describe-function] . counsel-describe-function)
   ([remap describe-command] . helpful-command)
@@ -137,6 +140,8 @@
 (nb/leader-keys
   "ts" '(hydra-text-scale/body :which-key "scale text"))
 
+(use-package org)
+
 (use-package projectile
   :diminish projectile-mode
   :config (projectile-mode)
@@ -146,7 +151,7 @@
   :init
   (when (file-directory-p "~/../../projects")
     (setq projectile-project-search-path '("~/.emacs.d" ("~/../../projects" . 2))))
-  (setq projectile-switch-project-action #'projectile-dired))
+  (setq projectile-switch-project-action *'projectile-dired))
 
 ; TODO: Take a look at this. The `counsel-projectile-mode` command fails for some reason...
 (use-package counsel-projectile
@@ -157,14 +162,15 @@
 (use-package magit
   :commands (magit-status magit-get-current-branch))
   ;:custom
-  ;(magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+  ;(magit-display-buffer-function *'magit-display-buffer-same-window-except-diff-v1))
 
 (use-package forge
   :after magit)
 
 (use-package git-gutter+
   :config
-  (global-git-gutter+-mode +1))
+  (global-git-gutter+-mode +1)
+  (setq git-gutter+-hide-gutter t))
 
 (use-package groovy-mode)
 (use-package jenkinsfile-mode

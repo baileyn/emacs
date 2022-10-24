@@ -1,8 +1,8 @@
 #+title: Emacs Configuration
 #+PROPERTY: header-args:emacs-lisp :tangle ./init.el :mkdirp yes
 
-## Editor
-### Core UI
+** Editor
+*** Core UI
 #+begin_src emacs-lisp
   (setq inhibit-startup-message t)
   (scroll-bar-mode -1)
@@ -12,7 +12,7 @@
   (setq visible-bell t)
 #+end_src
 
-### Line Numbers
+*** Line Numbers
 #+begin_src emacs-lisp
   (column-number-mode)
 
@@ -24,27 +24,27 @@
     (add-hook mode (lambda () (display-line-numbers-mode 0))))
 #+end_src
 
-### Font
+*** Font
 #+begin_src emacs-lisp
     (set-face-attribute 'default nil :font "Fira Code Retina" :height 110)
     (set-face-attribute 'fixed-pitch nil :font "Fira Code Retina" :height 110)
     (set-face-attribute 'variable-pitch nil :font "Cantarell" :height 110 :weight 'regular)
 #+end_src
 
-### Global Keybinds
+*** Global Keybinds
 #+begin_src emacs-lisp
   (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 #+end_src
 
-## Additional Configurations
+** Additional Configurations
 #+begin_src emacs-lisp
   (when (file-exists-p "~/.emacs.d/secrets.el")
     (load-file (expand-file-name "~/.emacs.d/secrets.el")))
 #+end_src
 
-## Plugins
-### Core
-#### Use Package
+** Plugins
+*** Core
+**** Use Package
 #+begin_src emacs-lisp
   (require 'package)
   (setq package-archives '(("melpa" . "https://melpa.org/packages/")
@@ -59,8 +59,8 @@
   (setq use-package-always-ensure t)
 #+end_src
 
-### Quality of Life
-#### Which Key
+*** Quality of Life
+**** Which Key
 #+begin_src emacs-lisp
   (use-package which-key
     :diminish
@@ -69,12 +69,12 @@
     (setq which-key-idle-delay 0.3))
 #+end_src
 
-#### Helpful
+**** Helpful
 #+begin_src emacs-lisp
   (use-package helpful
     :custom
-    (counsel-describe-function-function #'helpful-callable)
-    (counsel-describe-variable-function #'helpful-variable)
+    (counsel-describe-function-function *'helpful-callable)
+    (counsel-describe-variable-function *'helpful-variable)
     :bind
     ([remap describe-function] . counsel-describe-function)
     ([remap describe-command] . helpful-command)
@@ -82,13 +82,13 @@
     ([remap describe-key] . helpful-key))
 #+end_src
 
-#### Diminish
+**** Diminish
 #+begin_src emacs-lisp
   (use-package diminish)
 #+end_src
 
-### Keybinding
-#### General
+*** Keybinding
+**** General
 #+begin_src emacs-lisp
   (use-package general
     :config
@@ -101,8 +101,8 @@
     "tt" '(counsel-load-theme :which-key "choose theme"))
 #+end_src
 
-#### Evil Mode (vim)
-##### Core
+**** Evil Mode (vim)
+***** Core
 #+begin_src emacs-lisp
   (use-package evil
     :init
@@ -119,7 +119,7 @@
     (evil-set-initial-state 'dashboard-mode 'normal))
 #+end_src
 
-##### Undo Tree
+***** Undo Tree
 Undo Tree is used to allow redo functionality with Evil mode.
 
 #+begin_src emacs-lisp
@@ -131,7 +131,7 @@ Undo Tree is used to allow redo functionality with Evil mode.
     (global-undo-tree-mode 1))
 #+end_src
 
-##### Evil Collection
+***** Evil Collection
 #+begin_src emacs-lisp
   (use-package evil-collection
     :after evil
@@ -139,8 +139,8 @@ Undo Tree is used to allow redo functionality with Evil mode.
     (evil-collection-init))
 #+end_src
 
-### Completion
-#### Ivy
+*** Completion
+**** Ivy
 #+begin_src emacs-lisp
   (use-package ivy
     :diminish
@@ -163,7 +163,7 @@ Undo Tree is used to allow redo functionality with Evil mode.
     (ivy-rich-mode 1))
 #+end_src
 
-#### Counsel
+**** Counsel
 #+begin_src emacs-lisp
   (use-package counsel
     :bind (("M-x" . counsel-M-x)
@@ -173,14 +173,14 @@ Undo Tree is used to allow redo functionality with Evil mode.
 	   ("C-r" . 'counsel-minibuffer-history)))
 #+end_src
 
-### Rainbow Delimiters
+*** Rainbow Delimiters
 #+begin_src emacs-lisp
   (use-package rainbow-delimiters
     :hook (prog-mode . rainbow-delimiters-mode))
 #+end_src
 
-### Theming
-#### Doom
+*** Theming
+**** Doom
 #+begin_src emacs-lisp
   (use-package doom-themes)
 
@@ -193,8 +193,8 @@ Undo Tree is used to allow redo functionality with Evil mode.
   (load-theme 'doom-dark+ t)
 #+end_src
 
-### Utility
-#### Hydra
+*** Utility
+**** Hydra
 #+begin_src emacs-lisp
   (use-package hydra)
 
@@ -208,13 +208,13 @@ Undo Tree is used to allow redo functionality with Evil mode.
     "ts" '(hydra-text-scale/body :which-key "scale text"))
 #+end_src
 
-#### Org
+**** Org
 #+begin_src emacs-lisp
   (use-package org)
 #+end_src
 
-### Projects
-#### Projectile
+*** Projects
+**** Projectile
 #+begin_src emacs-lisp
   (use-package projectile
     :diminish projectile-mode
@@ -225,7 +225,7 @@ Undo Tree is used to allow redo functionality with Evil mode.
     :init
     (when (file-directory-p "~/../../projects")
       (setq projectile-project-search-path '("~/.emacs.d" ("~/../../projects" . 2))))
-    (setq projectile-switch-project-action #'projectile-dired))
+    (setq projectile-switch-project-action *'projectile-dired))
 
   ; TODO: Take a look at this. The `counsel-projectile-mode` command fails for some reason...
   (use-package counsel-projectile
@@ -234,22 +234,22 @@ Undo Tree is used to allow redo functionality with Evil mode.
     (counsel-projectile-mode))
 #+end_src
 
-### Source Control
-#### Magit
+*** Source Control
+**** Magit
 #+begin_src emacs-lisp
   (use-package magit
     :commands (magit-status magit-get-current-branch))
     ;:custom
-    ;(magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+    ;(magit-display-buffer-function *'magit-display-buffer-same-window-except-diff-v1))
 #+end_src
 
-#### Forge
+**** Forge
 #+begin_src emacs-lisp
   (use-package forge
     :after magit)
 #+end_src
 
-#### Git Gutter
+**** Git Gutter
 #+begin_src emacs-lisp
   (use-package git-gutter+
     :config
@@ -257,9 +257,9 @@ Undo Tree is used to allow redo functionality with Evil mode.
     (setq git-gutter+-hide-gutter t))
 #+end_src
 
-### Programming
-#### Languages
-##### Jenkins/Groovy
+*** Programming
+**** Languages
+***** Jenkins/Groovy
 #+begin_src emacs-lisp
 (use-package groovy-mode)
 (use-package jenkinsfile-mode
