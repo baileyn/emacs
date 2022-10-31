@@ -43,8 +43,8 @@
 
 (use-package helpful
   :custom
-  (counsel-describe-function-function *'helpful-callable)
-  (counsel-describe-variable-function *'helpful-variable)
+  (counsel-describe-function-function #'helpful-callable)
+  (counsel-describe-variable-function #'helpful-variable)
   :bind
   ([remap describe-function] . counsel-describe-function)
   ([remap describe-command] . helpful-command)
@@ -151,7 +151,9 @@
   :init
   (when (file-directory-p "~/../../projects")
     (setq projectile-project-search-path '("~/.emacs.d" ("~/../../projects" . 2))))
-  (setq projectile-switch-project-action *'projectile-dired))
+  (when (file-directory-p "~/projects")
+    (setq projectile-project-search-path '("~/.emacs.d" ("~/projects" . 3))))
+  (setq projectile-switch-project-action #'projectile-dired))
 
 ; TODO: Take a look at this. The `counsel-projectile-mode` command fails for some reason...
 (use-package counsel-projectile
@@ -162,7 +164,7 @@
 (use-package magit
   :commands (magit-status magit-get-current-branch))
   ;:custom
-  ;(magit-display-buffer-function *'magit-display-buffer-same-window-except-diff-v1))
+  ;(magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 (use-package forge
   :after magit)
@@ -172,6 +174,28 @@
   (global-git-gutter+-mode +1)
   (setq git-gutter+-hide-gutter t))
 
+(use-package lsp-mode
+  :diminish
+  :hook
+  ((python-mode . lsp)))
+(use-package lsp-ui
+  :commands lsp-ui-mode)
+
 (use-package groovy-mode)
 (use-package jenkinsfile-mode
-    :mode "Jenkinsfile.*")
+  :mode "Jenkinsfile.*")
+
+(use-package python-mode)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(no-littering python-mode lsp-ui lsp-mode which-key use-package undo-tree rainbow-delimiters jenkinsfile-mode ivy-rich hydra helpful git-gutter+ general forge evil-collection doom-themes doom-modeline diminish counsel-projectile all-the-icons)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

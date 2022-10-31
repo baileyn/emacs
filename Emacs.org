@@ -40,6 +40,12 @@
 #+begin_src emacs-lisp
   (when (file-exists-p "~/.emacs.d/secrets.el")
     (load-file (expand-file-name "~/.emacs.d/secrets.el")))
+
+  ;; Keep directories tidy.
+  (setq backup-directory-alist `(("." . "~/.saves")))
+
+					  ; Prevent undo tree files from polluting your git repo
+  (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
 #+end_src
 
 ** Plugins
@@ -60,6 +66,13 @@
 #+end_src
 
 *** Quality of Life
+**** Keep everything tidy
+#+begin_src emacs-lisp
+  (use-package no-littering)
+  (setq auto-save-file-name-transforms
+	`((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
+#+end_src
+
 **** Which Key
 #+begin_src emacs-lisp
   (use-package which-key
@@ -73,8 +86,8 @@
 #+begin_src emacs-lisp
   (use-package helpful
     :custom
-    (counsel-describe-function-function *'helpful-callable)
-    (counsel-describe-variable-function *'helpful-variable)
+    (counsel-describe-function-function #'helpful-callable)
+    (counsel-describe-variable-function #'helpful-variable)
     :bind
     ([remap describe-function] . counsel-describe-function)
     ([remap describe-command] . helpful-command)
@@ -225,7 +238,9 @@ Undo Tree is used to allow redo functionality with Evil mode.
     :init
     (when (file-directory-p "~/../../projects")
       (setq projectile-project-search-path '("~/.emacs.d" ("~/../../projects" . 2))))
-    (setq projectile-switch-project-action *'projectile-dired))
+    (when (file-directory-p "~/projects")
+      (setq projectile-project-search-path '("~/.emacs.d" ("~/projects" . 3))))
+    (setq projectile-switch-project-action #'projectile-dired))
 
   ; TODO: Take a look at this. The `counsel-projectile-mode` command fails for some reason...
   (use-package counsel-projectile
@@ -240,7 +255,7 @@ Undo Tree is used to allow redo functionality with Evil mode.
   (use-package magit
     :commands (magit-status magit-get-current-branch))
     ;:custom
-    ;(magit-display-buffer-function *'magit-display-buffer-same-window-except-diff-v1))
+    ;(magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 #+end_src
 
 **** Forge
@@ -258,11 +273,25 @@ Undo Tree is used to allow redo functionality with Evil mode.
 #+end_src
 
 *** Programming
+**** Lsp Mode
+#+begin_src emacs-lisp
+  (use-package lsp-mode
+    :diminish
+    :hook
+    ((python-mode . lsp)))
+  (use-package lsp-ui
+    :commands lsp-ui-mode)
+#+end_src
+
 **** Languages
 ***** Jenkins/Groovy
 #+begin_src emacs-lisp
-(use-package groovy-mode)
-(use-package jenkinsfile-mode
+  (use-package groovy-mode)
+  (use-package jenkinsfile-mode
     :mode "Jenkinsfile.*")
 #+end_src
 
+***** Python
+#+begin_src emacs-lisp
+  (use-package python-mode)
+#+end_src
