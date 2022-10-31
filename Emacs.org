@@ -297,3 +297,8 @@
     (setq typescript-indent-level 2))
 #+end_src
 
+**** Jenkinsfile
+#+begin_src emacs-lisp
+  (use-package jenkinsfile-mode
+    :mode "Jenkinsfile.*\\'")
+#+end_src
